@@ -202,22 +202,23 @@ void calc_hidden_layer_1(int x) // вот такое https://qph.fs.quoracdn.net
     for (i = 0; i < 784; i++){
         sum_h16_1 = sum_h16_1 + (training_data[x][i] / 256 * weights[784*15+i]);
     }
-    h1_1 = sigmoid_function(sum_h1_1);
-    h2_1 = sigmoid_function(sum_h2_1);
-    h3_1 = sigmoid_function(sum_h3_1);
-    h4_1 = sigmoid_function(sum_h4_1);
-    h5_1 = sigmoid_function(sum_h5_1);
-    h6_1 = sigmoid_function(sum_h6_1);
-    h7_1 = sigmoid_function(sum_h7_1);
-    h8_1 = sigmoid_function(sum_h8_1);
-    h9_1 = sigmoid_function(sum_h9_1);
-    h10_1 = sigmoid_function(sum_h10_1);
-    h11_1 = sigmoid_function(sum_h11_1);
-    h12_1 = sigmoid_function(sum_h12_1);
-    h13_1 = sigmoid_function(sum_h13_1);
-    h14_1 = sigmoid_function(sum_h14_1);
-    h15_1 = sigmoid_function(sum_h15_1);
-    h16_1 = sigmoid_function(sum_h16_1);
+    float h1_1  = sigmoid_function(sum_h1_1);
+    float h2_1 = sigmoid_function(sum_h2_1);
+    float h3_1 = sigmoid_function(sum_h3_1);
+    float h4_1 = sigmoid_function(sum_h4_1);
+    float h5_1 = sigmoid_function(sum_h5_1);
+    float h6_1 = sigmoid_function(sum_h6_1);
+    float h7_1 = sigmoid_function(sum_h7_1);
+    float h8_1 = sigmoid_function(sum_h8_1);
+    float h9_1 = sigmoid_function(sum_h9_1);
+    float h10_1 = sigmoid_function(sum_h10_1);
+    float h11_1 = sigmoid_function(sum_h11_1);
+    float h12_1 = sigmoid_function(sum_h12_1);
+    float h13_1 = sigmoid_function(sum_h13_1);
+    float h14_1 = sigmoid_function(sum_h14_1);
+    float h15_1 = sigmoid_function(sum_h15_1);
+    float h16_1 = sigmoid_function(sum_h16_1);
+    float h1[16] = {h1_1, h2_1, h3_1, h4_1, h5_1, h6_1, h7_1, h8_1, h9_1, h10_1, h11_1, h12_1, h13_1, h14_1, h15_1, h16_1};
 }
 
 void calc_hidden_layer_2(int x) // вот такое https://qph.fs.quoracdn.net/main-qimg-ce86322dcbf86b3050d321ec800c45c6
@@ -225,7 +226,7 @@ void calc_hidden_layer_2(int x) // вот такое https://qph.fs.quoracdn.net
     int i;
     int sum_h1_2 = 0;
     for (i = 0; i < 16; i++){
-        sum_h1_2 = sum_h1_2 + (h * weights[i]);
+        sum_h1_2 = sum_h1_2 + (h1[i] * weights[i]);
     }
     int sum_h2_2 = 0;
     for (i = 0; i < 16; i++){
