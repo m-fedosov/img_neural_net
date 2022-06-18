@@ -21,18 +21,20 @@ double training_data[4][2] = { { 1, 0 },
 //The anwsers that the neural network should be targeting for
 int anwser_data[4] = { 1, 0, 1, 0 };
 
-int bias = 1;
-float h1;
-float h2;
+int bias = 10;
+float h1[16] = {};
+float h2[16] = {};
 float error[4];
-float output_neuron;
+//float output_neuron;
+float sum_out[10] = {};
+float out_neuron[10] = {};
 float gradients[9];
 float derivative_O1;
 float derivative_h1;
 float derivative_h2;
-float sum_output;
-float sum_h1;
-float sum_h2;
+//float sum_output;
+float sum_h1[16] = {};
+float sum_h2[16] = {};
 float update_weights[9];
 float prev_weight_update[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 float RMSE_ERROR = 1;
@@ -137,179 +139,43 @@ void generate_weights()
 
 void calc_hidden_layer_1(int x) // вот такое https://qph.fs.quoracdn.net/main-qimg-ce86322dcbf86b3050d321ec800c45c6
 {
-    int i;
-    int sum_h1_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h1_1 = sum_h1_1 + (training_data[x][i] / 256 * weights[i]);
+    for (int k = 0; k < 16; k++){
+        for (int i = 0; i < 784; i++){
+            sum_h1[k] += (training_data[x][i] / 256 * weights[784 * k + i]);
+        }
     }
-    int sum_h2_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h2_1 = sum_h2_1 + (training_data[x][i] / 256 * weights[784+i]);
+    for (int i = 0; i < 16; i++) {
+        h1[i] = sigmoid_function(sum_h1[i]);
     }
-    int sum_h3_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h3_1 = sum_h3_1 + (training_data[x][i] / 256 * weights[784*2+i]);
-    }
-    int sum_h4_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h4_1 = sum_h4_1 + (training_data[x][i] / 256 * weights[784*3+i]);
-    }
-    int sum_h5_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h5_1 = sum_h5_1 + (training_data[x][i] / 256 * weights[784*4+i]);
-    }
-    int sum_h6_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h6_1 = sum_h6_1 + (training_data[x][i] / 256 * weights[784*5+i]);
-    }
-    int sum_h7_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h7_1 = sum_h7_1 + (training_data[x][i] / 256 * weights[784*6+i]);
-    }
-    int sum_h8_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h8_1 = sum_h8_1 + (training_data[x][i] / 256 * weights[784*7+i]);
-    }
-    int sum_h9_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h9_1 = sum_h9_1 + (training_data[x][i] / 256 * weights[784*8+i]);
-    }
-    int sum_h10_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h10_1 = sum_h10_1 + (training_data[x][i] / 256 * weights[784*9+i]);
-    }
-    int sum_h11_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h11_1 = sum_h11_1 + (training_data[x][i] / 256 * weights[784*10+i]);
-    }
-    int sum_h12_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h12_1 = sum_h12_1 + (training_data[x][i] / 256 * weights[784*11+i]);
-    }
-    int sum_h13_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h13_1 = sum_h13_1 + (training_data[x][i] / 256 * weights[784*12+i]);
-    }
-    int sum_h14_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h14_1 = sum_h14_1 + (training_data[x][i] / 256 * weights[784*13+i]);
-    }
-    int sum_h15_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h15_1 = sum_h15_1 + (training_data[x][i] / 256 * weights[784*14+i]);
-    }
-    int sum_h16_1 = 0;
-    for (i = 0; i < 784; i++){
-        sum_h16_1 = sum_h16_1 + (training_data[x][i] / 256 * weights[784*15+i]);
-    }
-    float h1_1  = sigmoid_function(sum_h1_1);
-    float h2_1 = sigmoid_function(sum_h2_1);
-    float h3_1 = sigmoid_function(sum_h3_1);
-    float h4_1 = sigmoid_function(sum_h4_1);
-    float h5_1 = sigmoid_function(sum_h5_1);
-    float h6_1 = sigmoid_function(sum_h6_1);
-    float h7_1 = sigmoid_function(sum_h7_1);
-    float h8_1 = sigmoid_function(sum_h8_1);
-    float h9_1 = sigmoid_function(sum_h9_1);
-    float h10_1 = sigmoid_function(sum_h10_1);
-    float h11_1 = sigmoid_function(sum_h11_1);
-    float h12_1 = sigmoid_function(sum_h12_1);
-    float h13_1 = sigmoid_function(sum_h13_1);
-    float h14_1 = sigmoid_function(sum_h14_1);
-    float h15_1 = sigmoid_function(sum_h15_1);
-    float h16_1 = sigmoid_function(sum_h16_1);
-    float h1[16] = {h1_1, h2_1, h3_1, h4_1, h5_1, h6_1, h7_1, h8_1, h9_1, h10_1, h11_1, h12_1, h13_1, h14_1, h15_1, h16_1};
 }
 
 void calc_hidden_layer_2(int x) // вот такое https://qph.fs.quoracdn.net/main-qimg-ce86322dcbf86b3050d321ec800c45c6
 {
-    int i;
-    int sum_h1_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h1_2 = sum_h1_2 + (h1[i] * weights[i]);
+    int last_weight_number = 784 * 16;
+    for (int k = 0; k < 16; k++){
+        for (int i = 0; i < 16; i++){
+            sum_h2[k] += (h1[i] * weights[last_weight_number + 16 * (k) + i]);
+        }
     }
-    int sum_h2_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h2_2 = sum_h2_2 + (h2_1 * weights[784+i]);
+    for (int i = 0; i < 16; i++) {
+        h2[i] = sigmoid_function(sum_h2[i]);
     }
-    int sum_h3_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h3_2 = sum_h3_2 + (h2_1 * weights[784*2+i]);
-    }
-    int sum_h4_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h4_2 = sum_h4_2 + (h2_1 * weights[784*3+i]);
-    }
-    int sum_h5_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h5_2 = sum_h5_2 + (h2_1 * weights[784*4+i]);
-    }
-    int sum_h6_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h6_2 = sum_h6_2 + (h2_1 * weights[784*5+i]);
-    }
-    int sum_h7_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h7_2 = sum_h7_2 + (h2_1 * weights[784*6+i]);
-    }
-    int sum_h8_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h8_2 = sum_h8_2 + (h2_1 * weights[784*7+i]);
-    }
-    int sum_h9_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h9_2 = sum_h9_2 + (h2_1 * weights[784*8+i]);
-    }
-    int sum_h10_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h10_2 = sum_h10_2 + (h2_1 * weights[784*9+i]);
-    }
-    int sum_h11_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h11_2 = sum_h11_2 + (h2_1 * weights[784*10+i]);
-    }
-    int sum_h12_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h12_2 = sum_h12_2 + (h2_1 * weights[784*11+i]);
-    }
-    int sum_h13_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h13_2 = sum_h13_2 + (h2_1 * weights[784*12+i]);
-    }
-    int sum_h14_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h14_2 = sum_h14_2 + (h2_1 * weights[784*13+i]);
-    }
-    int sum_h15_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h15_2 = sum_h15_2 + (h2_1 * weights[784*14+i]);
-    }
-    int sum_h16_2 = 0;
-    for (i = 0; i < 16; i++){
-        sum_h16_2 = sum_h16_2 + (h2_1 * weights[784*15+i]);
-    }
-    h1_1 = sigmoid_function(sum_h1_1);
-    h2_1 = sigmoid_function(sum_h2_1);
-    h3_1 = sigmoid_function(sum_h3_1);
-    h4_1 = sigmoid_function(sum_h4_1);
-    h5_1 = sigmoid_function(sum_h5_1);
-    h6_1 = sigmoid_function(sum_h6_1);
-    h7_1 = sigmoid_function(sum_h7_1);
-    h8_1 = sigmoid_function(sum_h8_1);
-    h9_1 = sigmoid_function(sum_h9_1);
-    h10_1 = sigmoid_function(sum_h10_1);
-    h11_1 = sigmoid_function(sum_h11_1);
-    h12_1 = sigmoid_function(sum_h12_1);
-    h13_1 = sigmoid_function(sum_h13_1);
-    h14_1 = sigmoid_function(sum_h14_1);
-    h15_1 = sigmoid_function(sum_h15_1);
-    h16_1 = sigmoid_function(sum_h16_1);
 }
 
-void calc_output_neuron() // также как и в hidden
+void calc_output_neurons() // также как и в hidden
 {
-    sum_output = (h1 * weights[6]) + (h2 * weights[7]) + (bias * weights[8]);
-    output_neuron = sigmoid_function(sum_output);
+    int last_weight_number = 784 * 16 + 16 * 16;
+    for (int k = 0; k < 10; k++){
+        for (int i = 0; i < 16; i++) {
+            last_weight_number += (16 * k) + i;
+            sum_out[k] += (h2[i] * weights[last_weight_number]);
+        }
+        last_weight_number += 1;
+        sum_out[k] += (bias * weights[last_weight_number]);
+    }
+    for (int i = 0; i < 10; i++){
+        out_neuron[i] = sigmoid_function(sum_out[i]);
+    }
 }
 
 void calc_error(int x) // значение на выходе - значение для i-ой строчки training_data
