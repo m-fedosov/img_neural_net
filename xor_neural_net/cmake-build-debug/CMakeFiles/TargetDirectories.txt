@@ -1,4 +1,0 @@
-C:/Users/mmmfe/CLionProjects/xor_neural_net/cmake-build-debug/CMakeFiles/xor_neural_net.dir
-C:/Users/mmmfe/CLionProjects/xor_neural_net/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/mmmfe/CLionProjects/xor_neural_net/cmake-build-debug/CMakeFiles/scratch.dir
-C:/Users/mmmfe/CLionProjects/xor_neural_net/cmake-build-debug/CMakeFiles/edit_cache.dir
