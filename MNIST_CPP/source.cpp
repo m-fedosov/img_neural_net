@@ -232,7 +232,8 @@ int main(){
     double ra = 0;
     int maxra = 0;
     int maxraepoch = 0;
-    const int n = 7;  //количество примеров
+    int n;  //количество примеров
+    std::cin >> n;
     bool to_study = 0;
     int data_n = n;
     int answer_data[data_n];
